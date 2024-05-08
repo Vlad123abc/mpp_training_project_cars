@@ -1,5 +1,6 @@
 package cars;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,8 +12,6 @@ public class JdbcUtils
     public JdbcUtils(Properties props){
         this.props=props;
     }
-
-    private static Connection instance = null;
 
     private Connection getNewConnection()
     {
@@ -40,15 +39,6 @@ public class JdbcUtils
 
     public Connection getConnection()
     {
-        try
-        {
-            if (instance==null || instance.isClosed())
-                instance = getNewConnection();
-        }
-        catch (SQLException e)
-        {
-            System.out.println("Error DB "+e);
-        }
-        return instance;
+        return getNewConnection();
     }
 }

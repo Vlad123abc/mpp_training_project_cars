@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class RepositoryTests
@@ -23,50 +24,59 @@ public class RepositoryTests
         Connection conn = dbUtils.getConnection();
         return conn;
     }
-    @Test
-    public void userRepoSmokeTest()
-    {
-        Connection conn = createTestConnection();
-        UserDBRepository repo = new UserDBRepository(conn);
-        assertNotNull(repo);                
-    }
 
     private void addTestUser(Connection conn, long id, String name, String password)
     {
-        try(PreparedStatement preStmt = conn.prepareStatement("insert into Users (id_user, username, password) values (?, ?, ?)"))
+        try(PreparedStatement preStmt = conn.prepareStatement("insert into Users (username, password) values (?, ?)"))
         {
-            preStmt.setLong(1, id);
-            preStmt.setString(2, name);
-            preStmt.setString(3, password);
+            preStmt.setString(1, name);
+            preStmt.setString(2, password);
             preStmt.executeUpdate();
         }
         catch(Exception e) {
             System.err.println("Error DB" + e);
         }
     }
+
+    @Test
+    public void userRepoSmokeTest()  throws SQLException
+    {
+        try (Connection conn = createTestConnection())
+        {
+            UserDBRepository repo = new UserDBRepository(conn);
+            assertNotNull(repo);
+        }        
+    }
     
     @Test
-    public void UserRepoGetByUserName()
+    public void UserRepoGetByUserName() throws SQLException
     {
-        Connection conn = createTestConnection();
-        UserDBRepository repo = new UserDBRepository(conn);
-        assertNotNull(repo);
-        addTestUser(conn, 1, "vlad", "parola");
-        var user = repo.getByUsername("vlad");
-        assertNotNull(user);
-        assertNull(repo.getByUsername("Bela"));
+        try(Connection conn = createTestConnection())
+        {
+            UserDBRepository repo = new UserDBRepository(conn);
+            assertNotNull(repo);
+            addTestUser(conn, 1, "vlad", "parola");
+            var user = repo.getByUsername("vlad");
+            assertNotNull(user);
+            assertNull(repo.getByUsername("Bela"));
+        }
     }
 
     @Test
-    public void UserRepoGetByUserId()
+    public void UserRepoGetByUserId() throws SQLException
     {
-        Connection conn = createTestConnection();
-        UserDBRepository repo = new UserDBRepository(conn);
-        assertNotNull(repo);
-        addTestUser(conn, 1, "vlad", "parola");
-        var user = repo.getById(1L);
-        assertNotNull(user);
-        var nouser  = repo.getById(2L);
-        assertNull(nouser);        
+        try (Connection conn = createTestConnection())
+        {
+            UserDBRepository repo = new UserDBRepository(conn);
+            assertNotNull(repo);
+            addTestUser(conn, 1, "vlad", "parola");
+            var user = repo.getById(1L);
+            assertNotNull(user);
+            var nouser  = repo.getById(2L);
+            assertNull(nouser);
+        }
+        finally
+        {
+        }
     }        
 }
