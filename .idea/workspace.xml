@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="implemented repo db for users">
-      <change afterPath="$PROJECT_DIR$/repository/src/test/java/RepositoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/cars/Service.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/cars/StartServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/resources/server.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/cars/IObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/cars/IService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cars/Main.java" beforeDir="false" />
-    </list>
+    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="implemented repo db for users" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,7 +122,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715158074850</updated>
-      <workItem from="1715158075915" duration="6567000" />
+      <workItem from="1715158075915" duration="6882000" />
     </task>
     <task id="LOCAL-00001" summary="first commit&#10;implemented domain module">
       <option name="closed" value="true" />
@@ -168,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715161766710</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="implemented repo db for users">
+      <option name="closed" value="true" />
+      <created>1715169420434</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715169420434</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
