@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="first commit&#10;implemented domain module">
-      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/CarRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/UserRepository.java" afterDir="false" />
+    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="implemented repo interfaces">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/CarDBRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/JdbcUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/UserDBRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/src/main/java/cars/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/main/java/cars/Repository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/repository/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/src/main/java/cars/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/main/java/cars/UserRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -54,6 +57,11 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "onboarding.tips.debug.path": "C:/Users/vlad/Documents/Facultate/mpp/training_projects/mpp_training_project_cars/repository/src/main/java/cars/Main.java",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -84,7 +92,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715158074850</updated>
-      <workItem from="1715158075915" duration="877000" />
+      <workItem from="1715158075915" duration="3513000" />
     </task>
     <task id="LOCAL-00001" summary="first commit&#10;implemented domain module">
       <option name="closed" value="true" />
@@ -102,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715158626512</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="implemented repo interfaces">
+      <option name="closed" value="true" />
+      <created>1715158982028</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715158982028</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,6 +126,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit&#10;implemented domain module" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit&#10;implemented domain module" />
+    <MESSAGE value="implemented repo interfaces" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented repo interfaces" />
   </component>
 </project>
