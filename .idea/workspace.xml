@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="repo test for cars delete not working">
+    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="repo test for cars delete">
+      <change afterPath="$PROJECT_DIR$/network/src/main/java/cars/utils/AbstractConcurrentServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network/src/main/java/cars/utils/AbstractServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network/src/main/java/cars/utils/JsonConcurrentServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +72,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "onboarding.tips.debug.path": "C:/Users/vlad/Documents/Facultate/mpp/training_projects/mpp_training_project_cars/server/src/main/java/cars/Main.java",
+    "onboarding.tips.debug.path": "C:/Users/vlad/Documents/Facultate/mpp/training_projects/mpp_training_project_cars/network/src/main/java/cars/Main.java",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -85,7 +90,7 @@
       <module name="mpp_training_project_cars.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cars.*" />
+          <option name="PATTERN" value="cars.utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -155,7 +160,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715158074850</updated>
-      <workItem from="1715158075915" duration="13013000" />
+      <workItem from="1715158075915" duration="13955000" />
     </task>
     <task id="LOCAL-00001" summary="first commit&#10;implemented domain module">
       <option name="closed" value="true" />
@@ -229,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715182476688</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="repo test for cars delete">
+      <option name="closed" value="true" />
+      <created>1715183051595</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715183051595</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,7 +256,8 @@
     <MESSAGE value="repo test for cars get all" />
     <MESSAGE value="repo test for cars save" />
     <MESSAGE value="repo test for cars delete not working" />
-    <option name="LAST_COMMIT_MESSAGE" value="repo test for cars delete not working" />
+    <MESSAGE value="repo test for cars delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="repo test for cars delete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
