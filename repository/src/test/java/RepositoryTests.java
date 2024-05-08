@@ -1,7 +1,4 @@
-import cars.CarDBRepository;
-import cars.JdbcUtils;
-import cars.UserDBRepository;
-import cars.UserRepository;
+import cars.*;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -108,5 +105,32 @@ public class RepositoryTests
             assertEquals(cars.get(0).getBrand(), "ford");
             assertEquals(cars.get(0).getHp(), 500);
         }
+    }
+
+    @Test
+    public void CarRepoSaveTest() throws SQLException
+    {
+        try (Connection conn = createTestConnection())
+        {
+            CarDBRepository repo = new CarDBRepository(conn);
+            assertNotNull(repo);
+
+            repo.save(new Car("ford", 500));
+            repo.save(new Car("dodge", 300));
+
+            var cars = repo.getAll();
+            assertNotNull(cars);
+
+            assertEquals(cars.size(), 2);
+            assertEquals(cars.get(0).getId(), 1);
+            assertEquals(cars.get(0).getBrand(), "ford");
+            assertEquals(cars.get(0).getHp(), 500);
+        }
+    }
+
+    @Test
+    public void CarRepoDeleteTest() throws SQLException
+    {
+
     }
 }

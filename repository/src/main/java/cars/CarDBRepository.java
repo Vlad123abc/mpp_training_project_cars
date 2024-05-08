@@ -72,20 +72,78 @@ public class CarDBRepository implements CarRepository
     }
 
     @Override
-    public void save(Car entity)
+    public void save(Car car)
     {
-
+        logger.traceEntry("saving tsak {}", car);
+        try(PreparedStatement preStmt = connection.prepareStatement("insert into Cars(brand, hp) values(?, ?)"))
+        {
+            preStmt.setString(1, car.getBrand());
+            preStmt.setInt(2, car.getHp());
+            int result = preStmt.executeUpdate();
+            logger.trace("Saved {} instances", result);
+            logger.traceExit();
+        }
+        catch (SQLException e)
+        {
+            logger.error(e);
+            System.err.println("Error DB" + e);
+        }
+        logger.traceExit();
     }
 
     @Override
-    public void delete(Long aLong)
+    public void delete(Long id)
     {
-
+        logger.traceEntry("delete tsak {}", id);
+        try(PreparedStatement preStmt = connection.prepareStatement("delete from Cars where id_car = ?"))
+        {
+            preStmt.setLong(1, id);
+            int result = preStmt.executeUpdate();
+            logger.trace("Deleted {} instances", result);
+        }
+        catch (SQLException e)
+        {
+            logger.error(e);
+            System.err.println("Error DB" + e);
+        }
+        logger.traceExit();
     }
 
     @Override
     public void update(Car entity)
     {
 
+    }
+
+    @Override
+    public List<Car> getAllByBrand(String brand)
+    {
+        logger.traceEntry();
+
+        List<Car> cars = new ArrayList<>();
+
+        try(PreparedStatement preStmt = connection.prepareStatement("select * from Cars where brand = ?"))
+        {
+            preStmt.setString(1, brand);
+            try(ResultSet resultSet = preStmt.executeQuery())
+            {
+                while (resultSet.next())
+                {
+                    int id_car = resultSet.getInt("id_car");
+                    int hp = resultSet.getInt("hp");
+
+                    Car car = new Car(brand, hp);
+                    car.setId((long) id_car);
+                    cars.add(car);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            logger.error(e);
+            System.err.println("Error DB" + e);
+        }
+        logger.traceExit();
+        return cars;
     }
 }
