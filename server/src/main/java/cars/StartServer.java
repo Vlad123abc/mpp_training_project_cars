@@ -2,7 +2,9 @@ package cars;
 
 import java.io.IOException;
 import java.util.Properties;
-import cars.JdbcUtils;
+import cars.utils.AbstractServer;
+import cars.utils.JsonConcurrentServer;
+
 import java.sql.Connection;
 
 public class StartServer
@@ -42,13 +44,16 @@ public class StartServer
             System.err.println("Wrong  Port Number" + nef.getMessage());
             System.err.println("Using default port " + defaultPort);
         }
-        System.out.println("Starting server on port: " + ServerPort);
 
-//        AbstractServer server = new ChatJsonConcurrentServer(chatServerPort, chatServerImpl);
-//        try {
-//            server.start();
-//        } catch (ServerException e) {
-//            System.err.println("Error starting the server" + e.getMessage());
-//        }
+        System.out.println("Starting server on port: " + ServerPort);
+        AbstractServer server = new JsonConcurrentServer(ServerPort, service);
+        try
+        {
+            server.start();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error starting the server " + e.getMessage());
+        }
     }
 }
