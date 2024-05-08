@@ -4,24 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/cars/Car.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/cars/Entity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/cars/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/Repository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cars/Main.java" afterDir="false" />
+    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="first commit&#10;implemented domain module">
+      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/CarRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repository/src/main/java/cars/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/src/main/java/cars/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/main/java/cars/Repository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,11 +84,32 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715158074850</updated>
-      <workItem from="1715158075915" duration="450000" />
+      <workItem from="1715158075915" duration="877000" />
     </task>
+    <task id="LOCAL-00001" summary="first commit&#10;implemented domain module">
+      <option name="closed" value="true" />
+      <created>1715158590706</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715158590706</updated>
+    </task>
+    <task id="LOCAL-00002" summary="first commit&#10;implemented domain module">
+      <option name="closed" value="true" />
+      <created>1715158626512</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715158626512</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit&#10;implemented domain module" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit&#10;implemented domain module" />
   </component>
 </project>
