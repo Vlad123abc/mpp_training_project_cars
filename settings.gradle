@@ -1,4 +1,6 @@
 rootProject.name = 'mpp_training_project_cars'
 include 'domain'
 include 'repository'
+include 'service'
+include 'server'
 
