@@ -131,6 +131,22 @@ public class RepositoryTests
     @Test
     public void CarRepoDeleteTest() throws SQLException
     {
+        try (Connection conn = createTestConnection())
+        {
+            CarDBRepository repo = new CarDBRepository(conn);
+            assertNotNull(repo);
 
+            repo.save(new Car("ford", 500));
+            repo.save(new Car("dodge", 300));
+
+            var cars = repo.getAll();
+            assertNotNull(cars);
+
+            assertEquals(cars.size(), 2);
+
+            repo.delete(1L);
+
+            assertEquals(cars.size(), 1);
+        }
     }
 }
