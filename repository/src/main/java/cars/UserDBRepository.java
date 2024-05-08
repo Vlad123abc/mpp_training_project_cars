@@ -17,11 +17,13 @@ public class UserDBRepository implements UserRepository
     
     public UserDBRepository(Connection connection)
     {
+        logger.info("Initializing UserDBRepository");
         this.connection = connection;
         initializeDbIfNeeded();
     }
 
-    public void initializeDbIfNeeded() {
+    public void initializeDbIfNeeded()
+    {
         try {
             final Statement stmt = connection.createStatement();
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS Users (id_user INTEGER, username TEXT, password TEXT, PRIMARY KEY(id_user))");

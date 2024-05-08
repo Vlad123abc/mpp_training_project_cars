@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="implemented repo db for users" />
+    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="commit all">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/src/main/java/cars/CarDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/main/java/cars/CarDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/src/main/java/cars/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/main/java/cars/UserDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/src/test/java/RepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/test/java/RepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/cars/StartServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/cars/StartServer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,6 +69,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "onboarding.tips.debug.path": "C:/Users/vlad/Documents/Facultate/mpp/training_projects/mpp_training_project_cars/server/src/main/java/cars/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -122,7 +131,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715158074850</updated>
-      <workItem from="1715158075915" duration="6882000" />
+      <workItem from="1715158075915" duration="10170000" />
     </task>
     <task id="LOCAL-00001" summary="first commit&#10;implemented domain module">
       <option name="closed" value="true" />
@@ -164,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715169420434</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="commit all">
+      <option name="closed" value="true" />
+      <created>1715169722100</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715169722100</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,7 +191,8 @@
     <MESSAGE value="first commit&#10;implemented domain module" />
     <MESSAGE value="implemented repo interfaces" />
     <MESSAGE value="implemented repo db for users" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented repo db for users" />
+    <MESSAGE value="commit all" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit all" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

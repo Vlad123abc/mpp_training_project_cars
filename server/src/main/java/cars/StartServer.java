@@ -26,8 +26,9 @@ public class StartServer
 
         JdbcUtils dbUtils = new JdbcUtils(serverProps);
         Connection conn = dbUtils.getConnection();
+
         UserRepository userRepo = new UserDBRepository(conn);
-        CarRepository carRepository = new CarDBRepository(serverProps);
+        CarRepository carRepository = new CarDBRepository(conn);
 
         IService service = new Service(userRepo, carRepository);
 
