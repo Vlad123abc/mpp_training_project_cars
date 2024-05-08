@@ -13,8 +13,7 @@ import java.util.Properties;
 
 public class RepositoryTests
 {
-    @Test
-    public void userRepoSmokeTest()
+    private Connection createTestConnection()
     {
         var props = new Properties();
         props.setProperty("jdbc.driver", "org.sqlite.JDBC");
@@ -22,6 +21,12 @@ public class RepositoryTests
         JdbcUtils dbUtils = new JdbcUtils(props);
         assertNotNull(dbUtils);
         Connection conn = dbUtils.getConnection();
+        return conn;
+    }
+    @Test
+    public void userRepoSmokeTest()
+    {
+        Connection conn = createTestConnection();
         UserDBRepository repo = new UserDBRepository(conn);
         assertNotNull(repo);                
     }
@@ -43,12 +48,7 @@ public class RepositoryTests
     @Test
     public void UserRepoGetByUserName()
     {
-        var props = new Properties();
-        props.setProperty("jdbc.driver", "org.sqlite.JDBC");
-        props.setProperty("jdbc.url", "jdbc:sqlite::memory:");
-        JdbcUtils dbUtils = new JdbcUtils(props);
-        assertNotNull(dbUtils);
-        Connection conn = dbUtils.getConnection();
+        Connection conn = createTestConnection();
         UserDBRepository repo = new UserDBRepository(conn);
         assertNotNull(repo);
         addTestUser(conn, 1, "vlad", "parola");
@@ -60,12 +60,7 @@ public class RepositoryTests
     @Test
     public void UserRepoGetByUserId()
     {
-        var props = new Properties();
-        props.setProperty("jdbc.driver", "org.sqlite.JDBC");
-        props.setProperty("jdbc.url", "jdbc:sqlite::memory:");
-        JdbcUtils dbUtils = new JdbcUtils(props);
-        assertNotNull(dbUtils);
-        Connection conn = dbUtils.getConnection();
+        Connection conn = createTestConnection();
         UserDBRepository repo = new UserDBRepository(conn);
         assertNotNull(repo);
         addTestUser(conn, 1, "vlad", "parola");
