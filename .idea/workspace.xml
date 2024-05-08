@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="repo test for cars save">
+    <list default="true" id="157ac0f9-681f-4820-88c2-a4c592950e55" name="Changes" comment="repo test for cars delete not working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/src/test/java/RepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/test/java/RepositoryTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +79,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.RepositoryTests.CarRepoSaveTest">
+  <component name="RunManager" selected="Gradle.mpp_training_project_cars:repository [test]">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cars.Main" />
       <module name="mpp_training_project_cars.main" />
@@ -142,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.RepositoryTests.CarRepoSaveTest" />
         <item itemvalue="Gradle.mpp_training_project_cars:repository [test]" />
+        <item itemvalue="Gradle.RepositoryTests.CarRepoSaveTest" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -156,7 +155,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715158074850</updated>
-      <workItem from="1715158075915" duration="12576000" />
+      <workItem from="1715158075915" duration="13013000" />
     </task>
     <task id="LOCAL-00001" summary="first commit&#10;implemented domain module">
       <option name="closed" value="true" />
@@ -222,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715181987912</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="repo test for cars delete not working">
+      <option name="closed" value="true" />
+      <created>1715182476688</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715182476688</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +242,8 @@
     <MESSAGE value="commit all" />
     <MESSAGE value="repo test for cars get all" />
     <MESSAGE value="repo test for cars save" />
-    <option name="LAST_COMMIT_MESSAGE" value="repo test for cars save" />
+    <MESSAGE value="repo test for cars delete not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="repo test for cars delete not working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

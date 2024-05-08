@@ -145,8 +145,13 @@ public class RepositoryTests
             assertEquals(cars.size(), 2);
 
             repo.delete(1L);
+            cars = repo.getAll();
 
             assertEquals(cars.size(), 1);
+
+            assertEquals(cars.get(0).getId(), 2);
+            assertEquals(cars.get(0).getBrand(), "dodge");
+            assertEquals(cars.get(0).getHp(), 300);
         }
     }
 }
