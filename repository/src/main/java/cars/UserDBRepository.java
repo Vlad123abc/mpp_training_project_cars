@@ -7,28 +7,34 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
-import java.util.Properties;
 
 public class UserDBRepository implements UserRepository
 {
-    private JdbcUtils dbUtils;
-
     private static final Logger logger = LogManager.getLogger();
-
-    public UserDBRepository(Properties props)
+    private Connection connection = null;
+    
+    public UserDBRepository(Connection connection)
     {
-        logger.info("Initializing UtilizatorDBRepository with properties: {} ", props);
-        this.dbUtils = new JdbcUtils(props);
+        this.connection = connection;
+        initializeDbIfNeeded();
     }
 
+    public void initializeDbIfNeeded() {
+        try {
+            final Statement stmt = connection.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS Users (id_user INTEGER, username TEXT, password TEXT, PRIMARY KEY(id_user))");
+        } catch (SQLException e) {
+            System.err.println("[ERROR] createSchema : " + e.getMessage());
+        }        
+    }
     @Override
     public User getById(Long id)
     {
         logger.traceEntry();
-        Connection con = dbUtils.getConnection();
 
-        try(PreparedStatement preStmt = con.prepareStatement("select * from Users where id_user = ?"))
+        try(PreparedStatement preStmt = connection.prepareStatement("select * from Users where id_user = ?"))
         {
             preStmt.setLong(1, id);
             try(ResultSet resultSet = preStmt.executeQuery())
@@ -81,9 +87,8 @@ public class UserDBRepository implements UserRepository
     public User getByUsername(String username)
     {
         logger.traceEntry();
-        Connection con = dbUtils.getConnection();
 
-        try(PreparedStatement preStmt = con.prepareStatement("select * from Users where username = ?"))
+        try(PreparedStatement preStmt = connection.prepareStatement("select * from Users where username = ?"))
         {
             preStmt.setString(1, username);
             try(ResultSet resultSet = preStmt.executeQuery())

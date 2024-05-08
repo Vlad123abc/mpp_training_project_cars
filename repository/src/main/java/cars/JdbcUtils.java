@@ -16,17 +16,15 @@ public class JdbcUtils
 
     private Connection getNewConnection()
     {
-        String driver = props.getProperty("chat.jdbc.driver");
-        String url = props.getProperty("chat.jdbc.url");
-        String user = props.getProperty("chat.jdbc.user");
-        String pass = props.getProperty("chat.jdbc.pass");
+        String driver = props.getProperty("jdbc.driver");
+        String url = props.getProperty("jdbc.url");
 
         Connection con = null;
 
         try
         {
             Class.forName(driver);
-            con = DriverManager.getConnection(url, user, pass);
+            con = DriverManager.getConnection(url);
         }
         catch (ClassNotFoundException e)
         {

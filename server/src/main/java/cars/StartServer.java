@@ -2,6 +2,8 @@ package cars;
 
 import java.io.IOException;
 import java.util.Properties;
+import cars.JdbcUtils;
+import java.sql.Connection;
 
 public class StartServer
 {
@@ -22,7 +24,9 @@ public class StartServer
             return;
         }
 
-        UserRepository userRepo = new UserDBRepository(serverProps);
+        JdbcUtils dbUtils = new JdbcUtils(serverProps);
+        Connection conn = dbUtils.getConnection();
+        UserRepository userRepo = new UserDBRepository(conn);
         CarRepository carRepository = new CarDBRepository(serverProps);
 
         IService service = new Service(userRepo, carRepository);
