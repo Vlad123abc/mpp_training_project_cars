@@ -84,4 +84,41 @@ public class ServiceTests
         assertEquals(cars.get(1).getBrand(), "dodge");
         assertEquals(cars.get(1).getHp(), 300);
     }
+
+    @Test
+    public void getAllCarsBrandTest() throws SQLException
+    {
+        Service service = this.createTestService();
+        var cars = service.getAllCarsBrand("ford");
+        assertEquals(cars.size(), 1);
+
+        assertEquals(cars.get(0).getBrand(), "ford");
+        assertEquals(cars.get(0).getHp(), 500);
+    }
+
+    @Test
+    public void save_deleteCarTest() throws SQLException
+    {
+        Service service = this.createTestService();
+        var cars = service.getAllCars();
+        assertEquals(cars.size(), 2);
+
+        service.saveCar("chevy", 100);
+        cars = service.getAllCars();
+        assertEquals(cars.size(), 3);
+
+
+        assertEquals(cars.get(2).getId(), 3L);
+        assertEquals(cars.get(2).getBrand(), "chevy");
+        assertEquals(cars.get(2).getHp(), 100);
+
+        service.deleteCar(3L);
+        cars = service.getAllCars();
+        assertEquals(cars.size(), 2);
+
+        assertEquals(cars.get(0).getBrand(), "ford");
+        assertEquals(cars.get(0).getHp(), 500);
+        assertEquals(cars.get(1).getBrand(), "dodge");
+        assertEquals(cars.get(1).getHp(), 300);
+    }
 }
