@@ -91,6 +91,28 @@ public class RepositoryTests
         }
     }
 
+    @Test
+    public void UserRepoSaveTest() throws SQLException
+    {
+        try (Connection conn = createTestConnection())
+        {
+            UserDBRepository repo = new UserDBRepository(conn);
+            assertNotNull(repo);
+
+            repo.save(new User("vlad", "parola"));
+            repo.save(new User("mark", "parola"));
+
+            var users = repo.getAll();
+
+            assertEquals(users.size(), 2);
+
+            assertEquals(users.get(0).getUsername(), "vlad");
+            assertEquals(users.get(1).getUsername(), "mark");
+            assertEquals(users.get(0).getPassword(), "parola");
+            assertEquals(users.get(1).getPassword(), "parola");
+        }
+    }
+
     private void addTestCar(Connection conn, String brand, Integer hp)
     {
         try(PreparedStatement preStmt = conn.prepareStatement("insert into Cars (brand, hp) values (?, ?)"))

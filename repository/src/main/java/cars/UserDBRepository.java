@@ -95,9 +95,23 @@ public class UserDBRepository implements UserRepository
     }
 
     @Override
-    public void save(User entity)
+    public void save(User user)
     {
-
+        logger.traceEntry("saving tsak {}", user);
+        try(PreparedStatement preStmt = connection.prepareStatement("insert into Users(username, password) values(?, ?)"))
+        {
+            preStmt.setString(1, user.getUsername());
+            preStmt.setString(2, user.getPassword());
+            int result = preStmt.executeUpdate();
+            logger.trace("Saved {} instances", result);
+            logger.traceExit();
+        }
+        catch (SQLException e)
+        {
+            logger.error(e);
+            System.err.println("Error DB" + e);
+        }
+        logger.traceExit();
     }
 
     @Override
