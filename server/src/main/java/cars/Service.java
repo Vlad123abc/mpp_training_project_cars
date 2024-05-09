@@ -2,6 +2,7 @@ package cars;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,10 +22,10 @@ public class Service implements IService
     }
 
     @Override
-    public synchronized void login(User user, IObserver client) throws Exception
+    public synchronized void login(String username, String password, IObserver client) throws Exception
     {
-        User userR = userRepository.getByUsername(user.getUsername());
-        if (userR != null)
+        User user = userRepository.getByUsername(username);
+        if (user != null && Objects.equals(user.getPassword(), password))
         {
             if(loggedClients.get(user.getId()) != null)
                 throw new Exception("User already logged in.");

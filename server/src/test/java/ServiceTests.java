@@ -1,7 +1,4 @@
-import cars.CarDBRepository;
-import cars.JdbcUtils;
-import cars.Service;
-import cars.UserDBRepository;
+import cars.*;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -63,7 +60,53 @@ public class ServiceTests
     @Test
     public void userLoginTest() throws SQLException
     {
+        Service service = this.createTestService();
+        IObserver client = new IObserver()
+        {
+            @Override
+            public void carSaved(Car car) throws Exception
+            {
 
+            }
+
+            @Override
+            public void carDeleted(Long id) throws Exception
+            {
+
+            }
+        };
+
+        try
+        {
+            service.login("vlad", "parola", client);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Exception caught: " + e.getMessage());
+            assertEquals(e.getMessage(), "User already logged in.");
+        }
+
+        try
+        {
+            service.login("vlad", "parolaaa", client);
+            fail();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Exception caught: " + e.getMessage());
+            assertEquals(e.getMessage(), "Authentication failed.");
+        }
+
+        try
+        {
+            service.login("vlad", "parola", client);
+            fail();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Exception caught: " + e.getMessage());
+            assertEquals(e.getMessage(), "User already logged in.");
+        }
     }
 
     @Test

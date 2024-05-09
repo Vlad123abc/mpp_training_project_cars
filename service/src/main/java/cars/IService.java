@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IService
 {
-    void login(User user, IObserver client) throws Exception;
+    void login(String username, String password, IObserver client) throws Exception;
     void logout(User user, IObserver client) throws Exception;
     List<Car> getAllCars();
     List<Car> getAllCarsBrand(String brand);
