@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDBRepository implements UserRepository
@@ -64,7 +65,33 @@ public class UserDBRepository implements UserRepository
     @Override
     public List<User> getAll()
     {
-        return null;
+        logger.traceEntry();
+
+        List<User> users = new ArrayList<>();
+
+        try(PreparedStatement preStmt = connection.prepareStatement("select * from Users"))
+        {
+            try(ResultSet resultSet = preStmt.executeQuery())
+            {
+                while (resultSet.next())
+                {
+                    int id_user = resultSet.getInt("id_user");
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+
+                    User user = new User(username, password);
+                    user.setId((long) id_user);
+                    users.add(user);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            logger.error(e);
+            System.err.println("Error DB" + e);
+        }
+        logger.traceExit();
+        return users;
     }
 
     @Override

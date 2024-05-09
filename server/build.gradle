@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'cars'
@@ -16,6 +17,10 @@ dependencies {
     implementation project(path: ':network')
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+application{
+    mainClass = 'cars.StartServer'
 }
 
 test {

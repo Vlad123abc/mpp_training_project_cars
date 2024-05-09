@@ -73,6 +73,24 @@ public class RepositoryTests
         }
     }
 
+    @Test
+    public void UserRepogetAllTest() throws SQLException
+    {
+        try (Connection conn = createTestConnection())
+        {
+            UserDBRepository repo = new UserDBRepository(conn);
+            assertNotNull(repo);
+
+            addTestUser(conn, "vlad", "parola");
+            addTestUser(conn, "mark", "parola");
+            addTestUser(conn, "emma", "parola");
+
+            var users = repo.getAll();
+
+            assertEquals(users.size(), 3);
+        }
+    }
+
     private void addTestCar(Connection conn, String brand, Integer hp)
     {
         try(PreparedStatement preStmt = conn.prepareStatement("insert into Cars (brand, hp) values (?, ?)"))
