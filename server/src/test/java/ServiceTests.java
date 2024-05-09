@@ -110,9 +110,49 @@ public class ServiceTests
     }
 
     @Test
-    public void userLogoutTest() throws SQLException
+    public void userLogoutTest() throws Exception
     {
+        Service service = this.createTestService();
+        IObserver client = new IObserver()
+        {
+            @Override
+            public void carSaved(Car car) throws Exception
+            {
 
+            }
+
+            @Override
+            public void carDeleted(Long id) throws Exception
+            {
+
+            }
+        };
+
+        try
+        {
+            User user = new User("vlad", "parola");
+            user.setId(1L);
+            service.logout(user, client);
+            fail();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Exception caught: " + e.getMessage());
+            assertEquals(e.getMessage(), "User vlad is not logged in.");
+        }
+
+        service.login("vlad", "parola", client);
+
+        try
+        {
+            User user = new User("vlad", "parola");
+            user.setId(1L);
+            service.logout(user, client);
+        }
+        catch (Exception e)
+        {
+            fail();
+        }
     }
 
     @Test
