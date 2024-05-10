@@ -3,6 +3,7 @@ package cars.jsonProtocol;
 import cars.Car;
 import cars.IObserver;
 import cars.IService;
+import cars.User;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -95,6 +96,22 @@ public class ClientWorker implements Runnable, IObserver
     private Response handleRequest(Request request)
     {
         Response response = null;
+
+        if (request.getType() == RequestType.LOGIN)
+        {
+            System.out.println("Login request ..." + request.getType());
+            User user = (User) request.getData();
+            try
+            {
+                server.login(user.getUsername(), user.getPassword(), this);
+                return new Response.Builder().setType(ResponseType.OK).build();
+            }
+            catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
 
         return response;
     }
