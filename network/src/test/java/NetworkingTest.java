@@ -145,8 +145,12 @@ public class NetworkingTest {
         IService mockService = Mockito.mock(IService.class);
         // Mockito.when(mockList.size()).thenReturn(100);
         List<Car> cars = new ArrayList<>();
-        cars.add(new Car("Ford", 100));
-        cars.add(new Car("dodge", 10));
+        Car car1 = new Car("Ford", 100);
+        car1.setId(1L);
+        Car car2 = new Car("Dodge", 10);
+        car2.setId(2L);
+        cars.add(car1);
+        cars.add(car2);
         Mockito.when(mockService.getAllCars()).thenReturn(cars);
 
         Closeable mockSocket = Mockito.mock(Closeable.class);
@@ -178,6 +182,6 @@ public class NetworkingTest {
         // was the login response ok?
         var responseData = gson.fromJson(responseLine, Response.class);
         assertEquals(responseData.getType(), ResponseType.GET_ALL_CARS);
-        assertEquals(responseData.getData(), cars);
+        assertEquals(gson.fromJson(responseData.getData().toString(), cars.getClass()), cars);
     }
 }
