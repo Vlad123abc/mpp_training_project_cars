@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -129,9 +130,24 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public List<cars.Car> getAllCars()
+    public List<Car> getAllCars() throws Exception
     {
-        return null;
+        Request req = new Request.Builder().setType(RequestType.GET_ALL_CARS).build();
+
+        System.out.println("Sending getAllCars Request: " + req.toString());
+        sendRequest(req);
+        Response response = readResponse();
+        System.out.println("Recived getAllCars Response: " + response.toString());
+
+        if (response.getType() == ResponseType.ERROR)
+        {
+            closeConnection();
+            String err = response.getData().toString();
+            throw new Exception(err);
+        }
+
+        List<Car> carList = new ArrayList<Car>();
+        return gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
     }
 
     @Override
@@ -190,7 +206,7 @@ public class ServiceProxy implements IService
 
     private boolean isUpdate(Response response)
     {
-        return response.getType()== ResponseType.SAVE_CAR || response.getType()== ResponseType.DELETE_CAR;
+        return response.getType() == ResponseType.SAVE_CAR || response.getType() == ResponseType.DELETE_CAR;
     }
     private class ReaderThread implements Runnable
     {

@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class ClientWorker implements Runnable, IObserver {
     private IService server;
@@ -77,10 +78,12 @@ public class ClientWorker implements Runnable, IObserver {
         }
     }
 
-    private Response handleRequest(Request request) {
+    private Response handleRequest(Request request)
+    {
         Response response = null;
 
-        if (request.getType() == RequestType.LOGIN) {
+        if (request.getType() == RequestType.LOGIN)
+        {
             System.out.println("Login request ..." + request.getType());
             // User user = (User) request.getData();
             User user = gsonFormatter.fromJson(request.getData().toString(), User.class);
@@ -93,10 +96,25 @@ public class ClientWorker implements Runnable, IObserver {
             }
         }
 
+        if (request.getType() == RequestType.GET_ALL_CARS)
+        {
+            System.out.println("GET_ALL_CARS request ..." + request.getType());
+            try
+            {
+                List<Car> cars = this.server.getAllCars();
+                return new Response.Builder().setType(ResponseType.GET_ALL_CARS).setData(cars).build();
+            } catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
+
         return response;
     }
 
-    private void sendResponse(Response response) throws IOException {
+    private void sendResponse(Response response) throws IOException
+    {
         String responseLine = gsonFormatter.toJson(response);
         System.out.println("sending response " + responseLine);
         synchronized (output) {

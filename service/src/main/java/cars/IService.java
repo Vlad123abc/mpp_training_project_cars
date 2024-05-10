@@ -6,7 +6,7 @@ public interface IService
 {
     void login(String username, String password, IObserver client) throws Exception;
     void logout(User user, IObserver client) throws Exception;
-    List<Car> getAllCars();
+    List<Car> getAllCars() throws Exception;
     List<Car> getAllCarsBrand(String brand);
     void saveCar(String brand, Integer hp);
     void deleteCar(Long id);
