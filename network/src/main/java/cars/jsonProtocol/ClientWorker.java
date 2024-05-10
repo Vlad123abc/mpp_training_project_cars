@@ -9,11 +9,7 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
 
 public class ClientWorker implements Runnable, IObserver
 {
@@ -26,14 +22,14 @@ public class ClientWorker implements Runnable, IObserver
 
     private volatile boolean connected;
 
-    public ClientWorker(IService server, Closeable connection, InputStream input, OutputStream output)
+    public ClientWorker(IService server, Closeable connection, BufferedReader input, PrintWriter output)
     {
         this.server = server;
         this.connection = connection;
 
         gsonFormatter = new Gson();
-        this.output = new PrintWriter(output);
-        this.input = new BufferedReader(new InputStreamReader(input));
+        this.output = output;
+        this.input = input;
         connected = true;
     }
 
