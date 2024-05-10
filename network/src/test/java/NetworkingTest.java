@@ -38,7 +38,7 @@ public class NetworkingTest {
     };
 
     @Test
-    public void loginOk() throws IOException {
+    public void loginOk() throws Exception {
             // setting up input that will be sent
         String r = "{'type'='LOGIN', 'data'={'username'='vlad', 'password'='parola', 'id'=0}}" + System.lineSeparator();
             // setting up input reader - just as we were reading from the socket
@@ -52,7 +52,6 @@ public class NetworkingTest {
             // Mock objects - these implement interfaces, and they do nothing yet.
         IService mockService = Mockito.mock(IService.class);
         Closeable mockSocket = Mockito.mock(Closeable.class);
-
             // create the worker with input, output and the mock objects - nothing is real here, we test the CW in isolation.
         ClientWorker cw = new ClientWorker(mockService, mockSocket, input, output);
         Thread t = new Thread(cw);
@@ -68,6 +67,7 @@ public class NetworkingTest {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        Mockito.verify(mockService).login(Mockito.eq("vlad"), Mockito.eq("parola"),Mockito.any());
 
             // now we assert the output
             // we read line by line from the response object
@@ -110,6 +110,9 @@ public class NetworkingTest {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        Mockito.verify(mockService).login(Mockito.eq("vladaaa"), Mockito.eq("parola"),Mockito.any());
+        
         String response = new String(sw.getBuffer());
 
         StringReader responseReader = new StringReader(response);
