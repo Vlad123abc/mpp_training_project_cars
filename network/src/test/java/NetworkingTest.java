@@ -182,6 +182,14 @@ public class NetworkingTest {
         // was the login response ok?
         var responseData = gson.fromJson(responseLine, Response.class);
         assertEquals(responseData.getType(), ResponseType.GET_ALL_CARS);
-        assertEquals(gson.fromJson(responseData.getData().toString(), cars.getClass()), cars);
+
+        List<Car> carList = new ArrayList<>();
+        var list = gson.fromJson(responseData.getData().toString(), cars.getClass());
+        for (var car : list)
+        {
+            Car c = gson.fromJson(car.toString(), Car.class);
+            carList.add(c);
+        }
+        assertEquals(carList, cars);
     }
 }
