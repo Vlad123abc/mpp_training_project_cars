@@ -7,8 +7,11 @@ import cars.User;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -16,29 +19,22 @@ public class ClientWorker implements Runnable, IObserver
 {
     private IService server;
 
-    private Socket connection;
+    private Closeable connection;
     private BufferedReader input;
     private PrintWriter output;
     private Gson gsonFormatter;
 
     private volatile boolean connected;
 
-    public ClientWorker(IService server, Socket connection)
+    public ClientWorker(IService server, Closeable connection, InputStream input, OutputStream output)
     {
         this.server = server;
         this.connection = connection;
 
         gsonFormatter = new Gson();
-        try
-        {
-            output = new PrintWriter(connection.getOutputStream());
-            input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            connected = true;
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        this.output = new PrintWriter(output);
+        this.input = new BufferedReader(new InputStreamReader(input));
+        connected = true;
     }
 
     @Override
