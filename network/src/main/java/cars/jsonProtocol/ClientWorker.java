@@ -93,7 +93,8 @@ public class ClientWorker implements Runnable, IObserver
         if (request.getType() == RequestType.LOGIN)
         {
             System.out.println("Login request ..." + request.getType());
-            User user = (User) request.getData();
+            //User user = (User) request.getData();
+            User user = gsonFormatter.fromJson(request.getData().toString(), User.class);
             try
             {
                 server.login(user.getUsername(), user.getPassword(), this);
