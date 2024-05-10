@@ -1,10 +1,12 @@
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import cars.Car;
 import cars.IObserver;
@@ -34,12 +36,14 @@ public class NetworkingTest
     @Test
     public void smoke()
     {
-        String r = "{}";
+        String r = "{'type'='LOGIN', 'data'={'username'='vlad', 'password'='parola', 'id'=0}}" + System.lineSeparator();
         StringReader sr = new StringReader(r);
         StringWriter sw = new StringWriter();
         var input = new BufferedReader(sr );      
         var output = new PrintWriter(sw);
-        ClientWorker cw = new ClientWorker (null,null, input, output);
+        IService mockService = Mockito.mock(IService.class);
+        Closeable mockSocket = Mockito.mock(Closeable.class);        
+        ClientWorker cw = new ClientWorker (mockService,mockSocket, input, output);
         cw.run();
     }
 }

@@ -53,6 +53,7 @@ public class ClientWorker implements Runnable, IObserver
             try
             {
                 String requestLine = input.readLine();
+                System.out.println(new String("received line") + requestLine);
                 Request request = gsonFormatter.fromJson(requestLine, Request.class);
                 Response response = handleRequest(request);
                 if (response!=null)
