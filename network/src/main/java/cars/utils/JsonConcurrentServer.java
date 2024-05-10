@@ -1,6 +1,7 @@
 package cars.utils;
 
 import cars.IService;
+import cars.jsonProtocol.ClientWorker;
 
 import java.net.Socket;
 
@@ -18,10 +19,7 @@ public class JsonConcurrentServer extends AbstractConcurrentServer
     @Override
     protected Thread createWorker(Socket client)
     {
-//        ChatClientJsonWorker worker=new ChatClientJsonWorker(chatServer, client);
-//
-//        Thread tw=new Thread(worker);
-//        return tw;
-        return null;
+        ClientWorker worker = new ClientWorker(server, client);
+        return new Thread(worker);
     }
 }
