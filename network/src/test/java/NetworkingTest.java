@@ -132,7 +132,7 @@ public class NetworkingTest {
     public void getAllCarsTest() throws Exception
     {
         // setting up input that will be sent
-        String r = "{'type'='GET_ALL_CARS', 'data'=null}}" + System.lineSeparator();
+        String r = "{'type'='GET_ALL_CARS', 'data'=null}" + System.lineSeparator();
         // setting up input reader - just as we were reading from the socket
         StringReader sr = new StringReader(r);
         var input = new BufferedReader(sr);
