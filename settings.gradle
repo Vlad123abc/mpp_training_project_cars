@@ -4,4 +4,5 @@ include 'repository'
 include 'service'
 include 'server'
 include 'network'
+include 'testClient'
 
