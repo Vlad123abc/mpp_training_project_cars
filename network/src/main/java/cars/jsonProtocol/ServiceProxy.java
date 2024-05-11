@@ -146,8 +146,14 @@ public class ServiceProxy implements IService
             throw new Exception(err);
         }
 
-        List<Car> carList = new ArrayList<Car>();
-        return gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
+        List<Car> carList = new ArrayList<>();
+        var list = gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
+        for (var car : list)
+        {
+            Car c = gsonFormatter.fromJson(car.toString(), Car.class);
+            carList.add(c);
+        }
+        return carList;
     }
 
     @Override
