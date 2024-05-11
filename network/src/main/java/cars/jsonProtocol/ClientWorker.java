@@ -96,6 +96,22 @@ public class ClientWorker implements Runnable, IObserver {
             }
         }
 
+        if (request.getType() == RequestType.LOGOUT)
+        {
+            System.out.println("Logout request ..." + request.getType());
+            User user = gsonFormatter.fromJson(request.getData().toString(), User.class);
+            try
+            {
+                server.logout(user, this);
+                return new Response.Builder().setType(ResponseType.OK).build();
+            }
+            catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
+
         if (request.getType() == RequestType.GET_ALL_CARS)
         {
             System.out.println("GET_ALL_CARS request ..." + request.getType());

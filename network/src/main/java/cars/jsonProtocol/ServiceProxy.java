@@ -130,6 +130,27 @@ public class ServiceProxy implements IService
     }
 
     @Override
+    public void logout(User user, IObserver client) throws Exception
+    {
+        Request req = new Request.Builder().setType(RequestType.LOGOUT).setData(user).build();
+        System.out.println("Sending Logout Request: " + req.toString());
+        sendRequest(req);
+        Response response = readResponse();
+        System.out.println("Recived Logout Response: " + response.toString());
+        this.closeConnection();
+        if (response.getType() == ResponseType.OK)
+        {
+            System.out.println("Logout OK");
+        }
+        if (response.getType() == ResponseType.ERROR)
+        {
+            String err = (String) response.getData();
+            System.out.println("Closing connection...");
+            throw new Exception(err);
+        }
+    }
+
+    @Override
     public List<Car> getAllCars() throws Exception
     {
         Request req = new Request.Builder().setType(RequestType.GET_ALL_CARS).build();
@@ -191,12 +212,6 @@ public class ServiceProxy implements IService
 
     @Override
     public void deleteCar(Long id)
-    {
-
-    }
-
-    @Override
-    public void logout(User user, IObserver client) throws Exception
     {
 
     }
