@@ -2,8 +2,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -16,17 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import cars.Car;
-import cars.IObserver;
 import cars.IService;
 import cars.jsonProtocol.ClientWorker;
 import cars.jsonProtocol.Response;
 import cars.jsonProtocol.ResponseType;
-import cars.jsonProtocol.ServiceProxy;
 
-public class NetworkingTest {
-    private static int defaultChatPort = 55556;
-    private static String defaultServer = "localhost";
-
+public class ClientWorkerTests
+{
     @Test
     public void loginOk() throws Exception
     {
