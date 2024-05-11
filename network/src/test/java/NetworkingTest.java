@@ -27,18 +27,6 @@ public class NetworkingTest {
     private static int defaultChatPort = 55556;
     private static String defaultServer = "localhost";
 
-    private IObserver observer = new IObserver() {
-        @Override
-        public void carSaved(Car car) throws Exception {
-            System.out.println("Observer Car Saved");
-        }
-
-        @Override
-        public void carDeleted(Long id) throws Exception {
-            System.out.println("Observer Car Deleted");
-        }
-    };
-
     @Test
     public void loginOk() throws Exception
     {
@@ -352,6 +340,54 @@ public class NetworkingTest {
         assertEquals(responseData.getType(), ResponseType.OK);
     }
 
+    @Test
+    public void CarSavedNotificationForwarded() throws Exception
+    {
+        // setting up input that will be sent
+        String r = System.lineSeparator();
+        // setting up input reader - just as we were reading from the socket
+        StringReader sr = new StringReader(r);
+        var input = new BufferedReader(sr);
+
+        // setting up writer - our ClientWorker will write responses here. We will assert later what the test output was.
+        StringWriter sw = new StringWriter();
+        var output = new PrintWriter(sw);
+
+        // Mock objects - these implement interfaces, and they do nothing yet.
+        IService mockService = Mockito.mock(IService.class);
+        Closeable mockSocket = Mockito.mock(Closeable.class);
+        // create the worker with input, output and the mock objects - nothing is real here, we test the CW in isolation.
+        ClientWorker cw = new ClientWorker(mockService, mockSocket, input, output);
+        Thread t = new Thread(cw);
+        t.start();
+        Thread.sleep(500);
+            // this is just like the service calling its observer, telling hey there's a new car
+        var ford = new Car("Ford", 100);
+        cw.carSaved(ford);
+        Thread.sleep(500);        
+        cw.stop();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        // now we assert the output
+        // we read line by line from the response object
+        String response = new String(sw.getBuffer());
+
+        StringReader responseReader = new StringReader(response);
+        var responseInput = new BufferedReader(responseReader);
+        var responseLine = responseInput.readLine();
+        Gson gson = new Gson();
+        // did the CW forward the car saved notification?
+        var responseData = gson.fromJson(responseLine, Response.class);
+        assertEquals(ResponseType.SAVE_CAR, responseData.getType());
+        var car = gson.fromJson(responseData.getData().toString(), Car.class);
+        assertEquals(car, ford);        
+    }
+    
     @Test
     public void DeleteCarTest() throws Exception
     {
