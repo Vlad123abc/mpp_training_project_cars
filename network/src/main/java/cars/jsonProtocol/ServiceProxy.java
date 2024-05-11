@@ -157,9 +157,30 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public List<cars.Car> getAllCarsBrand(String brand)
+    public List<cars.Car> getAllCarsBrand(String brand) throws Exception
     {
-        return null;
+        Request req = new Request.Builder().setType(RequestType.GET_ALL_CARS_BRAND).setData(brand).build();
+
+        System.out.println("Sending getAllCarsBrand Request: " + req.toString());
+        sendRequest(req);
+        Response response = readResponse();
+        System.out.println("Recived getAllCarsBrand Response: " + response.toString());
+
+        if (response.getType() == ResponseType.ERROR)
+        {
+            closeConnection();
+            String err = response.getData().toString();
+            throw new Exception(err);
+        }
+
+        List<Car> carList = new ArrayList<>();
+        var list = gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
+        for (var car : list)
+        {
+            Car c = gsonFormatter.fromJson(car.toString(), Car.class);
+            carList.add(c);
+        }
+        return carList;
     }
 
     @Override

@@ -110,6 +110,21 @@ public class ClientWorker implements Runnable, IObserver {
             }
         }
 
+        if (request.getType() == RequestType.GET_ALL_CARS_BRAND)
+        {
+            System.out.println("GET_ALL_CARS_BRAND request ..." + request.getType());
+            try
+            {
+                String brand = gsonFormatter.fromJson(request.getData().toString(), String.class);
+                List<Car> cars = this.server.getAllCarsBrand(brand);
+                return new Response.Builder().setType(ResponseType.GET_ALL_CARS_BRAND).setData(cars).build();
+            } catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
+
         return response;
     }
 
