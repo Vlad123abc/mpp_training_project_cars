@@ -33,21 +33,49 @@ public class ClientWorker implements Runnable, IObserver {
     }
 
     @Override
-    public void carSaved(Car car) throws Exception {
+    public void carSaved(Car car) throws Exception
+    {
+        Response response = new Response.Builder().setType(ResponseType.SAVE_CAR).setData(car).build();
 
+        System.out.println("Car saved:" + car.toString());
+
+        try
+        {
+            sendResponse(response);
+        }
+        catch (IOException e)
+        {
+            throw new Exception("Sending error: " + e);
+        }
     }
 
     @Override
-    public void carDeleted(Long id) throws Exception {
+    public void carDeleted(Long id) throws Exception
+    {
+        Response response = new Response.Builder().setType(ResponseType.DELETE_CAR).setData(id).build();
 
+        System.out.println("Car deleted:" + id.toString());
+
+        try
+        {
+            sendResponse(response);
+        }
+        catch (IOException e)
+        {
+            throw new Exception("Sending error: " + e);
+        }
     }
-    public void stop() {
+
+    public void stop()
+    {
         connected = false;
         System.out.println(String.format("Stop requested, Connected is: %s", connected));                        
     }
     @Override
-    public void run() {
-        while (connected) {
+    public void run()
+    {
+        while (connected)
+        {
             try
             {
                 String requestLine = input.readLine();
@@ -135,6 +163,38 @@ public class ClientWorker implements Runnable, IObserver {
                 List<Car> cars = this.server.getAllCarsBrand(brand);
                 return new Response.Builder().setType(ResponseType.GET_ALL_CARS_BRAND).setData(cars).build();
             } catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
+
+        if (request.getType() == RequestType.SAVE_CAR)
+        {
+            System.out.println("SAVE_CAR request ...");
+            try
+            {
+                Car car = gsonFormatter.fromJson(request.getData().toString(), Car.class);
+                this.server.saveCar(car.getBrand(), car.getHp());
+                return new Response.Builder().setType(ResponseType.OK).build();
+            }
+            catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
+
+        if (request.getType() == RequestType.DELETE_CAR)
+        {
+            System.out.println("DELETE_CAR request ...");
+            try
+            {
+                Long id = gsonFormatter.fromJson(request.getData().toString(), Long.class);
+                this.server.deleteCar(id);
+                return new Response.Builder().setType(ResponseType.OK).build();
+            }
+            catch (Exception e)
             {
                 connected = false;
                 return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();

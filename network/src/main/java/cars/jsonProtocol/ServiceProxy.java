@@ -205,22 +205,57 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public void saveCar(String brand, Integer hp)
+    public void saveCar(String brand, Integer hp) throws Exception
     {
+        Request req = new Request.Builder().setType(RequestType.SAVE_CAR).setData(new Car(brand, hp)).build();
 
+        System.out.println("Sending saveCar Request: " + req.toString());
+        sendRequest(req);
+        Response response = readResponse();
+        System.out.println("Recived saveCar Response: " + response.toString());
+
+        if (response.getType() == ResponseType.OK)
+        {
+            System.out.println("saveCar OK");
+        }
+        if (response.getType() == ResponseType.ERROR)
+        {
+            String err = (String) response.getData();
+            System.out.println("Closing connection...");
+            closeConnection();
+            throw new Exception(err);
+        }
     }
 
     @Override
-    public void deleteCar(Long id)
+    public void deleteCar(Long id) throws Exception
     {
+        Request req = new Request.Builder().setType(RequestType.DELETE_CAR).setData(id).build();
 
+        System.out.println("Sending deleteCar Request: " + req.toString());
+        sendRequest(req);
+        Response response = readResponse();
+        System.out.println("Recived deleteCar Response: " + response.toString());
+
+        if (response.getType() == ResponseType.OK)
+        {
+            System.out.println("deleteCar OK");
+        }
+        if (response.getType() == ResponseType.ERROR)
+        {
+            String err = (String) response.getData();
+            System.out.println("Closing connection...");
+            closeConnection();
+            throw new Exception(err);
+        }
     }
 
     private void handleUpdate(Response response)
     {
         if (response.getType()== ResponseType.SAVE_CAR)
         {
-            Car car = (Car) response.getData();
+            Car car = gsonFormatter.fromJson(response.getData().toString(), Car.class);
+            // Car car = (Car) response.getData();
             System.out.println("The car: " + car);
             try
             {
@@ -233,7 +268,8 @@ public class ServiceProxy implements IService
         }
         if (response.getType()== ResponseType.DELETE_CAR)
         {
-            Long id = (Long) response.getData();
+            Long id = gsonFormatter.fromJson(response.getData().toString(), Long.class);
+            // Long id = (Long) response.getData();
             System.out.println("The id of the car: " + id);
             try
             {

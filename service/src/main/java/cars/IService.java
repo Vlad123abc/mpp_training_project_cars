@@ -8,6 +8,6 @@ public interface IService
     void logout(User user, IObserver client) throws Exception;
     List<Car> getAllCars() throws Exception;
     List<Car> getAllCarsBrand(String brand) throws Exception;
-    void saveCar(String brand, Integer hp);
-    void deleteCar(Long id);
+    void saveCar(String brand, Integer hp) throws Exception;
+    void deleteCar(Long id) throws Exception;
 }
