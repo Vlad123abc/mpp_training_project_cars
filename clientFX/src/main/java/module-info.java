@@ -4,5 +4,5 @@ module mpp.training.project.cars.clientFX.main {
     requires javafx.fxml;
 
     opens cars to javafx.fxml;
-    exports cars to javafx.graphics;
+    exports cars.gui to javafx.fxml;
 }
