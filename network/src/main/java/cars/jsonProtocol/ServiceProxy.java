@@ -285,19 +285,22 @@ public class ServiceProxy implements IService
                     String responseLine = input.readLine();
                     System.out.println("response received " + responseLine);
                     Response response = gsonFormatter.fromJson(responseLine, Response.class);
-                    if (isUpdate(response))
+                    if (response != null)
                     {
-                        handleUpdate(response);
-                    }
-                    else
-                    {
-                        try
+                        if (isUpdate(response))
                         {
-                            qresponses.put(response);
+                            handleUpdate(response);
                         }
-                        catch (InterruptedException e)
+                        else
                         {
-                            e.printStackTrace();
+                            try
+                            {
+                                qresponses.put(response);
+                            }
+                            catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
