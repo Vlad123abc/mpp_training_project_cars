@@ -29,37 +29,37 @@ public class StartClientConsole
 
     public void start() throws Exception
     {
-        System.out.println("In start");
-
-        String serverIP = defaultServer;
-        int serverPort = defaultChatPort;
-        System.out.println("Using server IP " + serverIP);
-        System.out.println("Using server port " + serverPort);
-
-        IService server = new ServiceProxy(serverIP, serverPort);
-        TestObserver observer = new TestObserver();
-
-        try
-        {
-            server.login("vlad", "parola", observer);
-            System.out.println("Login Succes!");
-        }
-        catch (Exception e)
-        {
-            System.out.println("Login Fail!");
-            System.out.println(e.getMessage());
-        }
-
-        try
-        {
-            server.login("mark", "parolaaa", observer);
-            System.out.println("Login Succes!");
-        }
-        catch (Exception e)
-        {
-            System.out.println("Login Fail!");
-            System.out.println(e.getMessage());
-        }
+//        System.out.println("In start");
+//
+//        String serverIP = defaultServer;
+//        int serverPort = defaultChatPort;
+//        System.out.println("Using server IP " + serverIP);
+//        System.out.println("Using server port " + serverPort);
+//
+//        IService server = new ServiceProxy(serverIP, serverPort);
+//        TestObserver observer = new TestObserver();
+//
+//        try
+//        {
+//            server.login("vlad", "parola", observer);
+//            System.out.println("Login Succes!");
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println("Login Fail!");
+//            System.out.println(e.getMessage());
+//        }
+//
+//        try
+//        {
+//            server.login("mark", "parolaaa", observer);
+//            System.out.println("Login Succes!");
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println("Login Fail!");
+//            System.out.println(e.getMessage());
+//        }
     }
 
     public static void main(String [] args)

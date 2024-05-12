@@ -6,10 +6,7 @@ import cars.IService;
 import cars.User;
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,42 +15,33 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ServiceProxy implements IService
 {
-    private String host;
-    private int port;
-
     private IObserver client;
 
     private BufferedReader input;
     private PrintWriter output;
     private Gson gsonFormatter;
-    private Socket connection;
+    private Closeable connection;
 
     private BlockingQueue<Response> qresponses;
     private volatile boolean finished;
 
-    public ServiceProxy(String host, int port)
+    public ServiceProxy(Closeable connection, BufferedReader input, PrintWriter output)
     {
-        this.host = host;
-        this.port = port;
+        this.connection = connection;
+        this.input = input;
+        this.output = output;
+
+        this.gsonFormatter = new Gson();
+
         this.qresponses = new LinkedBlockingQueue<Response>();
     }
 
-    private void initializeConnection() throws Exception
+    private void initializeConnection()
     {
-        try
-        {
-            gsonFormatter = new Gson();
-            connection = new Socket(host,port);
-            output = new PrintWriter(connection.getOutputStream());
-            output.flush();
-            input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            finished = false;
-            startReader();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        this.output.flush();
+        this.finished = false;
+
+        startReader();
     }
     private void startReader()
     {
