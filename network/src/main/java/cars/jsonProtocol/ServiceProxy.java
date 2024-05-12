@@ -161,6 +161,8 @@ public class ServiceProxy implements IService {
         }
 
         List<Car> carList = new ArrayList<>();
+        if (response.getData() == null)
+            return carList;
         var list = gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
         for (var car : list) {
             Car c = gsonFormatter.fromJson(car.toString(), Car.class);
