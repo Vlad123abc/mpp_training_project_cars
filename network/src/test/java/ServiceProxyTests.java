@@ -31,7 +31,7 @@ public class ServiceProxyTests
 
         serviceProxy.login("vlad", "parola", mockObs);
 
-
+        //assertEquals(input.readLine(), "{'type'='LOGIN', 'data'={'username'='vlad', 'password'='parola', 'id'=0}}");
     }
 
     @Test
