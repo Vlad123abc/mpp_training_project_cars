@@ -1,4 +1,5 @@
 import cars.IObserver;
+import cars.User;
 import cars.jsonProtocol.Response;
 import cars.jsonProtocol.ResponseType;
 import cars.jsonProtocol.ServiceProxy;
@@ -49,10 +50,15 @@ public class ServiceProxyTests {
         var whatWasWrittenCheckInput = new BufferedReader(whatWasWrittenReader);
         var writtenLine = whatWasWrittenCheckInput.readLine();
         Gson gson = new Gson();
+
         // was the login sent all?
         var sentData = gson.fromJson(writtenLine, Response.class);
         assertEquals(sentData.getType(), ResponseType.LOGIN);
+
         // ... add verification to see user and pass
+        User user = gson.fromJson(sentData.getData().toString(), User.class);
+        assertEquals(user.getUsername(), "vlad");
+        assertEquals(user.getPassword(), "parola");
     }
 
     @Test
