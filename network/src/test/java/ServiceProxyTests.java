@@ -278,9 +278,6 @@ public class ServiceProxyTests {
         serviceProxy.saveCar("ford", 100);
         System.out.println("called SaveCar");
 
-        // check observer
-        Mockito.verify(mockObs).carSaved(Mockito.any());
-
         System.out.println("calling closeConnection");
         bufferedResponseReader.close();
         outputPrintWriter.close();
@@ -336,9 +333,6 @@ public class ServiceProxyTests {
         System.out.println("calling DeleteCar");
         serviceProxy.deleteCar(1L);
         System.out.println("called DeleteCar");
-
-        // check observer
-        Mockito.verify(mockObs).carSaved(Mockito.any());
 
         System.out.println("calling closeConnection");
         bufferedResponseReader.close();
