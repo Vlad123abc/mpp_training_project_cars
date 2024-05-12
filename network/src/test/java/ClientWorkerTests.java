@@ -28,18 +28,19 @@ public class ClientWorkerTests
         String r = "{'type'='LOGIN', 'data'={'username'='vlad', 'password'='parola', 'id'=0}}" + System.lineSeparator();
             // setting up input reader - just as we were reading from the socket
         StringReader sr = new StringReader(r);
-        var input = new BufferedReader(sr);
+        var inputBufferedReader = new BufferedReader(sr);
 
             // setting up writer - our ClientWorker will write responses here. We will assert later what the test output was.
-        StringWriter sw = new StringWriter();
-        var output = new PrintWriter(sw);
+        StringWriter outputWriter = new StringWriter();
+        var outputPrinter = new PrintWriter(outputWriter);
 
             // Mock objects - these implement interfaces, and they do nothing yet.
         IService mockService = Mockito.mock(IService.class);
         Closeable mockSocket = Mockito.mock(Closeable.class);
             // create the worker with input, output and the mock objects - nothing is real here, we test the CW in isolation.
-        ClientWorker cw = new ClientWorker(mockService, mockSocket, input, output);
+        ClientWorker cw = new ClientWorker(mockService, mockSocket, inputBufferedReader, outputPrinter);
         Thread t = new Thread(cw);
+            // rulam clientworker care va face pasii 2,3,4,5
         t.start();
         try {
             Thread.sleep(1000);
@@ -52,13 +53,15 @@ public class ClientWorkerTests
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+            // verificare pas 3 (s-a apelat login pe service?)
         Mockito.verify(mockService).login(Mockito.eq("vlad"), Mockito.eq("parola"),Mockito.any());
 
+            // pas 6.
             // now we assert the output
             // we read line by line from the response object
-        String response = new String(sw.getBuffer());
+        String allResponsesOneResponsePerLine = new String(outputWriter.getBuffer());
 
-        StringReader responseReader = new StringReader(response);
+        StringReader responseReader = new StringReader(allResponsesOneResponsePerLine);
         var responseInput = new BufferedReader(responseReader);
         var responseLine = responseInput.readLine();
         Gson gson = new Gson();

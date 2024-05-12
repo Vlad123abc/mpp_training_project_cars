@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ServiceProxy implements IService
-{
+public class ServiceProxy implements IService {
     private IObserver client;
 
     private BufferedReader input;
@@ -25,8 +24,7 @@ public class ServiceProxy implements IService
     private BlockingQueue<Response> qresponses;
     private volatile boolean finished;
 
-    public ServiceProxy(Closeable connection, BufferedReader input, PrintWriter output)
-    {
+    public ServiceProxy(Closeable connection, BufferedReader input, PrintWriter output) {
         this.connection = connection;
         this.input = input;
         this.output = output;
@@ -36,57 +34,46 @@ public class ServiceProxy implements IService
         this.qresponses = new LinkedBlockingQueue<Response>();
     }
 
-    private void initializeConnection()
-    {
+    private void initializeConnection() {
         this.output.flush();
         this.finished = false;
 
         startReader();
     }
-    private void startReader()
-    {
+
+    private void startReader() {
         Thread tw = new Thread(new ReaderThread());
         tw.start();
     }
-    private void closeConnection()
-    {
-        finished = true;
-        try
-        {
+
+    public void closeConnection() {
+        this.finished = true;
+        System.out.println("finished is " + finished);
+        try {
             input.close();
             output.close();
             connection.close();
             client = null;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void sendRequest(Request request) throws Exception
-    {
+    private void sendRequest(Request request) throws Exception {
         String reqLine = gsonFormatter.toJson(request);
-        try
-        {
+        try {
             output.println(reqLine);
             output.flush();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new Exception("Error sending object " + e);
         }
     }
 
-    private Response readResponse() throws Exception
-    {
+    private Response readResponse() throws Exception {
         Response response = null;
-        try
-        {
+        try {
             response = qresponses.take();
-        }
-        catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -94,8 +81,7 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public void login(String username, String password, IObserver client) throws Exception
-    {
+    public void login(String username, String password, IObserver client) throws Exception {
         initializeConnection();
 
         Request req = new Request.Builder().setType(RequestType.LOGIN).setData(new User(username, password)).build();
@@ -103,13 +89,11 @@ public class ServiceProxy implements IService
         sendRequest(req);
         Response response = readResponse();
         System.out.println("Recived Login Response: " + response.toString());
-        if (response.getType() == ResponseType.OK)
-        {
+        if (response.getType() == ResponseType.OK) {
             System.out.println("Login OK");
-            this.client=client;
+            this.client = client;
         }
-        if (response.getType() == ResponseType.ERROR)
-        {
+        if (response.getType() == ResponseType.ERROR) {
             String err = (String) response.getData();
             System.out.println("Closing connection...");
             closeConnection();
@@ -118,20 +102,17 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public void logout(User user, IObserver client) throws Exception
-    {
+    public void logout(User user, IObserver client) throws Exception {
         Request req = new Request.Builder().setType(RequestType.LOGOUT).setData(user).build();
         System.out.println("Sending Logout Request: " + req.toString());
         sendRequest(req);
         Response response = readResponse();
         System.out.println("Recived Logout Response: " + response.toString());
         this.closeConnection();
-        if (response.getType() == ResponseType.OK)
-        {
+        if (response.getType() == ResponseType.OK) {
             System.out.println("Logout OK");
         }
-        if (response.getType() == ResponseType.ERROR)
-        {
+        if (response.getType() == ResponseType.ERROR) {
             String err = (String) response.getData();
             System.out.println("Closing connection...");
             throw new Exception(err);
@@ -139,8 +120,7 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public List<Car> getAllCars() throws Exception
-    {
+    public List<Car> getAllCars() throws Exception {
         Request req = new Request.Builder().setType(RequestType.GET_ALL_CARS).build();
 
         System.out.println("Sending getAllCars Request: " + req.toString());
@@ -148,8 +128,7 @@ public class ServiceProxy implements IService
         Response response = readResponse();
         System.out.println("Recived getAllCars Response: " + response.toString());
 
-        if (response.getType() == ResponseType.ERROR)
-        {
+        if (response.getType() == ResponseType.ERROR) {
             closeConnection();
             String err = response.getData().toString();
             throw new Exception(err);
@@ -157,8 +136,7 @@ public class ServiceProxy implements IService
 
         List<Car> carList = new ArrayList<>();
         var list = gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
-        for (var car : list)
-        {
+        for (var car : list) {
             Car c = gsonFormatter.fromJson(car.toString(), Car.class);
             carList.add(c);
         }
@@ -166,8 +144,7 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public List<cars.Car> getAllCarsBrand(String brand) throws Exception
-    {
+    public List<cars.Car> getAllCarsBrand(String brand) throws Exception {
         Request req = new Request.Builder().setType(RequestType.GET_ALL_CARS_BRAND).setData(brand).build();
 
         System.out.println("Sending getAllCarsBrand Request: " + req.toString());
@@ -175,8 +152,7 @@ public class ServiceProxy implements IService
         Response response = readResponse();
         System.out.println("Recived getAllCarsBrand Response: " + response.toString());
 
-        if (response.getType() == ResponseType.ERROR)
-        {
+        if (response.getType() == ResponseType.ERROR) {
             closeConnection();
             String err = response.getData().toString();
             throw new Exception(err);
@@ -184,8 +160,7 @@ public class ServiceProxy implements IService
 
         List<Car> carList = new ArrayList<>();
         var list = gsonFormatter.fromJson(response.getData().toString(), carList.getClass());
-        for (var car : list)
-        {
+        for (var car : list) {
             Car c = gsonFormatter.fromJson(car.toString(), Car.class);
             carList.add(c);
         }
@@ -193,8 +168,7 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public void saveCar(String brand, Integer hp) throws Exception
-    {
+    public void saveCar(String brand, Integer hp) throws Exception {
         Request req = new Request.Builder().setType(RequestType.SAVE_CAR).setData(new Car(brand, hp)).build();
 
         System.out.println("Sending saveCar Request: " + req.toString());
@@ -202,12 +176,10 @@ public class ServiceProxy implements IService
         Response response = readResponse();
         System.out.println("Recived saveCar Response: " + response.toString());
 
-        if (response.getType() == ResponseType.OK)
-        {
+        if (response.getType() == ResponseType.OK) {
             System.out.println("saveCar OK");
         }
-        if (response.getType() == ResponseType.ERROR)
-        {
+        if (response.getType() == ResponseType.ERROR) {
             String err = (String) response.getData();
             System.out.println("Closing connection...");
             closeConnection();
@@ -216,8 +188,7 @@ public class ServiceProxy implements IService
     }
 
     @Override
-    public void deleteCar(Long id) throws Exception
-    {
+    public void deleteCar(Long id) throws Exception {
         Request req = new Request.Builder().setType(RequestType.DELETE_CAR).setData(id).build();
 
         System.out.println("Sending deleteCar Request: " + req.toString());
@@ -225,12 +196,10 @@ public class ServiceProxy implements IService
         Response response = readResponse();
         System.out.println("Recived deleteCar Response: " + response.toString());
 
-        if (response.getType() == ResponseType.OK)
-        {
+        if (response.getType() == ResponseType.OK) {
             System.out.println("deleteCar OK");
         }
-        if (response.getType() == ResponseType.ERROR)
-        {
+        if (response.getType() == ResponseType.ERROR) {
             String err = (String) response.getData();
             System.out.println("Closing connection...");
             closeConnection();
@@ -238,75 +207,55 @@ public class ServiceProxy implements IService
         }
     }
 
-    private void handleUpdate(Response response)
-    {
-        if (response.getType()== ResponseType.SAVE_CAR)
-        {
+    private void handleUpdate(Response response) {
+        if (response.getType() == ResponseType.SAVE_CAR) {
             Car car = gsonFormatter.fromJson(response.getData().toString(), Car.class);
             // Car car = (Car) response.getData();
             System.out.println("The car: " + car);
-            try
-            {
+            try {
                 client.carSaved(car);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if (response.getType()== ResponseType.DELETE_CAR)
-        {
+        if (response.getType() == ResponseType.DELETE_CAR) {
             Long id = gsonFormatter.fromJson(response.getData().toString(), Long.class);
             // Long id = (Long) response.getData();
             System.out.println("The id of the car: " + id);
-            try
-            {
+            try {
                 client.carDeleted(id);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private boolean isUpdate(Response response)
-    {
+    private boolean isUpdate(Response response) {
         return response.getType() == ResponseType.SAVE_CAR || response.getType() == ResponseType.DELETE_CAR;
     }
-    private class ReaderThread implements Runnable
-    {
-        public void run()
-        {
-            while(!finished)
-            {
-                try
-                {
+
+    private class ReaderThread implements Runnable {
+        public void run() {
+            while (!finished) {
+                System.out.println("finished is " + finished);
+                try {
                     String responseLine = input.readLine();
                     System.out.println("response received " + responseLine);
                     Response response = gsonFormatter.fromJson(responseLine, Response.class);
-                    if (response != null)
-                    {
-                        if (isUpdate(response))
-                        {
+                    if (response != null) {
+                        if (isUpdate(response)) {
                             handleUpdate(response);
-                        }
-                        else
-                        {
-                            try
-                            {
+                        } else {
+                            try {
                                 qresponses.put(response);
-                            }
-                            catch (InterruptedException e)
-                            {
+                            } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
-                }
-                catch (IOException e)
-                {
-                    System.out.println("Reading error " + e);
+                } catch (IOException e) {
+                    System.out.println("Reading error, going to close, error is: " + e);
+                    finished = true;
                 }
             }
         }
