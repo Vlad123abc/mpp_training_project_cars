@@ -6,4 +6,5 @@ include 'server'
 include 'network'
 include 'testClient'
 include 'clientFX'
+include 'clientFX2'
 
