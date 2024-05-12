@@ -64,7 +64,7 @@ public class ServiceProxyTests {
     @Test
     public void LogoutTest() throws Exception {
         // setting up input reader - just as we were reading from the socket
-        String responsesSeparatedWithNewLines = "{'type'='OK', 'data'=1}" + System.lineSeparator();
+        String responsesSeparatedWithNewLines = "{'type'='OK', 'data'=1}" + System.lineSeparator() + "{'type'='OK', 'data'=1}" + System.lineSeparator();
 
         StringReader responseReader = new StringReader(responsesSeparatedWithNewLines);
         var bufferedResponseReader = new BufferedReader(responseReader);
@@ -80,6 +80,14 @@ public class ServiceProxyTests {
 
         ServiceProxy serviceProxy = new ServiceProxy(mockSocket, bufferedResponseReader, outputPrintWriter);
 
+        System.out.println("calling login");
+        serviceProxy.login("vlad", "parola", mockObs);
+        System.out.println("called login");
+
+        // check that login succeeded, how do we check this?
+        // well, on error the socket is closed.
+        Mockito.verify(mockSocket, Mockito.never()).close();
+        
         System.out.println("calling logout");
         User vlad = new User("vlad", "parola");
         vlad.setId(1L);
@@ -88,7 +96,7 @@ public class ServiceProxyTests {
 
         // check that login succeeded, how do we check this?
         // well, on error the socket is closed.
-        Mockito.verify(mockSocket, Mockito.never()).close();
+        Mockito.verify(mockSocket, Mockito.atLeast(1)).close();
 
         System.out.println("calling closeConnection");
         bufferedResponseReader.close();
@@ -103,11 +111,16 @@ public class ServiceProxyTests {
 
         // was the login sent all?
         var sentData = gson.fromJson(writtenLine, Response.class);
-        assertEquals(sentData.getType(), ResponseType.LOGOUT);
-
+        assertEquals(ResponseType.LOGIN, sentData.getType());
         // ... add verification to see user and pass
         User user = gson.fromJson(sentData.getData().toString(), User.class);
         assertEquals(user.getUsername(), "vlad");
         assertEquals(user.getPassword(), "parola");
+
+        var logoutLine = whatWasWrittenCheckInput.readLine();
+        // was the login sent all?
+        var logoutData = gson.fromJson(logoutLine, Response.class);
+        assertEquals(ResponseType.LOGOUT, logoutData.getType());
+        
     }
 }
