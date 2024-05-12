@@ -121,6 +121,9 @@ public class ServiceProxyTests {
         // was the login sent all?
         var logoutData = gson.fromJson(logoutLine, Response.class);
         assertEquals(ResponseType.LOGOUT, logoutData.getType());
+        user = gson.fromJson(logoutData.getData().toString(), User.class);
+        assertEquals(user.getUsername(), "vlad");
+        assertEquals(user.getPassword(), "parola");
         
     }
 }
