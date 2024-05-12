@@ -22,7 +22,8 @@ public class ClientWorker implements Runnable, IObserver {
 
     private volatile boolean connected;
 
-    public ClientWorker(IService server, Closeable connection, BufferedReader input, PrintWriter output) {
+    public ClientWorker(IService server, Closeable connection, BufferedReader input, PrintWriter output)
+    {
         this.server = server;
         this.connection = connection;
 
