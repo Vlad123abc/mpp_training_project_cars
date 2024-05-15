@@ -21,6 +21,7 @@
       <Label layoutX="37.0" layoutY="390.0" text="HP:" />
       <TextField fx:id="txtBrand" layoutX="100.0" layoutY="346.0" />
       <TextField fx:id="txtHp" layoutX="100.0" layoutY="386.0" />
-      <Button layoutX="31.0" layoutY="430.0" mnemonicParsing="false" text="Add" onAction="#onAddCar"/>
+      <Button layoutX="31.0" layoutY="430.0" mnemonicParsing="false" onAction="#onAddCar" text="Add" />
+      <Button layoutX="283.0" layoutY="300.0" mnemonicParsing="false" text="Delete" onAction="#onDeleteCar"/>
    </children>
 </AnchorPane>

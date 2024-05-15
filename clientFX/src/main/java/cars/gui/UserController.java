@@ -121,4 +121,15 @@ public class UserController implements IObserver {
             this.service.saveCar(brand, hp);
         }
     }
+
+    public void onDeleteCar(ActionEvent actionEvent) throws Exception {
+        Car car = this.carTableView.getSelectionModel().getSelectedItem();
+
+        if (car == null)
+            MessageWindow.showMessage(null, Alert.AlertType.ERROR, "Error", "Select a car to delete!");
+        else
+        {
+            this.service.deleteCar(car.getId());
+        }
+    }
 }
