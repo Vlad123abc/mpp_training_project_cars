@@ -87,8 +87,17 @@ public class UserController implements IObserver {
         modelCar.setAll(cars);
     }
 
-    public void onAddCar(ActionEvent actionEvent)
-    {
+    public void onAddCar(ActionEvent actionEvent) throws Exception {
+        String brand = this.txtBrand.getText();
+        int hp = Integer.parseInt(this.txtHp.getText());
 
+        if (Objects.equals(brand, "") || hp < 1)
+        {
+            MessageWindow.showMessage(null, Alert.AlertType.ERROR, "Error", "Invalid input!");
+        }
+        else
+        {
+            this.service.saveCar(brand, hp);
+        }
     }
 }
