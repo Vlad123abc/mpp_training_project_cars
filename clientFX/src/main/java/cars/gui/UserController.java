@@ -4,6 +4,7 @@ import cars.Car;
 import cars.IObserver;
 import cars.IService;
 import cars.User;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,12 +69,32 @@ public class UserController implements IObserver {
 
     @Override
     public void carSaved(Car car) throws Exception {
-
+        Platform.runLater(() ->
+        {
+            try
+            {
+                var cars = this.service.getAllCars();
+                modelCar.setAll(cars);
+            } catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
     public void carDeleted(Long id) throws Exception {
-
+        Platform.runLater(() ->
+        {
+            try
+            {
+                var cars = this.service.getAllCars();
+                modelCar.setAll(cars);
+            } catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void onFiltreaza(ActionEvent actionEvent) throws Exception {
