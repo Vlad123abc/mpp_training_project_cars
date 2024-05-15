@@ -46,6 +46,7 @@ public class Service implements IService
     @Override
     public synchronized List<Car> getAllCars()
     {
+        System.out.println("number of cars found in repo: " + this.carRepository.getAll().size());
         return this.carRepository.getAll();
     }
 
@@ -67,6 +68,11 @@ public class Service implements IService
     {
         this.carRepository.delete(id);
         this.notifyCarDeleted(id);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return this.userRepository.getByUsername(username);
     }
 
     public void notifyCarSaved(String brand, Integer hp)

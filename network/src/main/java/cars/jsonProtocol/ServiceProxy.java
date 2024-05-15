@@ -211,6 +211,31 @@ public class ServiceProxy implements IService {
         }
     }
 
+    @Override
+    public User getUserByUsername(String username) throws Exception {
+        Request req = new Request.Builder().setType(RequestType.GET_USER_BY_USERNAME).setData(username).build();
+
+        System.out.println("Sending getUserByUsername Request: " + req.toString());
+        sendRequest(req);
+        Response response = readResponse();
+        System.out.println("Recived getUserByUsername Response: " + response.toString());
+
+        if (response.getType() == ResponseType.OK)
+        {
+            System.out.println("getUserByUsername OK");
+
+            return gsonFormatter.fromJson(response.getData().toString(), User.class);
+        }
+        if (response.getType() == ResponseType.ERROR)
+        {
+            String err = (String) response.getData();
+            System.out.println("Closing connection...");
+            closeConnection();
+            throw new Exception(err);
+        }
+        return null;
+    }
+
     private void handleUpdate(Response response) {
         if (response.getType() == ResponseType.SAVE_CAR) {
             Car car = gsonFormatter.fromJson(response.getData().toString(), Car.class);

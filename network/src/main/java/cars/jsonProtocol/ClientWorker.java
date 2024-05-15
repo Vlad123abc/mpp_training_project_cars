@@ -147,6 +147,7 @@ public class ClientWorker implements Runnable, IObserver {
             try
             {
                 List<Car> cars = this.server.getAllCars();
+                System.out.println("number of cars found: " + cars.size());
                 return new Response.Builder().setType(ResponseType.GET_ALL_CARS).setData(cars).build();
             } catch (Exception e)
             {
@@ -194,6 +195,22 @@ public class ClientWorker implements Runnable, IObserver {
                 Long id = gsonFormatter.fromJson(request.getData().toString(), Long.class);
                 this.server.deleteCar(id);
                 return new Response.Builder().setType(ResponseType.OK).build();
+            }
+            catch (Exception e)
+            {
+                connected = false;
+                return new Response.Builder().setType(ResponseType.ERROR).setData(e.getMessage()).build();
+            }
+        }
+
+        if (request.getType() == RequestType.GET_USER_BY_USERNAME)
+        {
+            System.out.println("GET_USER_BY_USERNAME request ...");
+            try
+            {
+                String username = gsonFormatter.fromJson(request.getData().toString(), String.class);
+                User user = this.server.getUserByUsername(username);
+                return new Response.Builder().setType(ResponseType.OK).setData(user).build();
             }
             catch (Exception e)
             {

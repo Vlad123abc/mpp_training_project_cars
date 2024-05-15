@@ -10,4 +10,6 @@ public interface IService
     List<Car> getAllCarsBrand(String brand) throws Exception;
     void saveCar(String brand, Integer hp) throws Exception;
     void deleteCar(Long id) throws Exception;
+
+    User getUserByUsername(String username) throws Exception;
 }
