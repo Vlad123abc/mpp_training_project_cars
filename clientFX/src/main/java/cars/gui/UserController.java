@@ -6,13 +6,15 @@ import cars.IService;
 import cars.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class UserController implements IObserver {
     private IService service;
@@ -25,6 +27,14 @@ public class UserController implements IObserver {
     private TableColumn<Car, String> carBrandColumn;
     @FXML
     private TableColumn<Car, Integer> carHpColumn;
+
+    @FXML
+    private ComboBox<String> carBrandComboBox;
+
+    @FXML
+    private TextField txtBrand;
+    @FXML
+    private TextField txtHp;
 
     public void init_controller(IService service, User user) throws Exception
     {
@@ -48,6 +58,12 @@ public class UserController implements IObserver {
         System.out.println("init model!!!!!!!!!!!!");
         var cars = this.service.getAllCars();
         modelCar.setAll(cars);
+
+        //carBrandComboBox
+        List<String> brands = new ArrayList<>();
+        for (Car car : cars)
+            brands.add(car.getBrand());
+        this.carBrandComboBox.setItems(FXCollections.observableArrayList(brands));
     }
 
     @Override
@@ -57,6 +73,22 @@ public class UserController implements IObserver {
 
     @Override
     public void carDeleted(Long id) throws Exception {
+
+    }
+
+    public void onFiltreaza(ActionEvent actionEvent) throws Exception {
+        String brand = this.carBrandComboBox.getValue();
+        if (!Objects.equals(brand, ""))
+            this.modelCar.setAll(this.service.getAllCarsBrand(brand));
+    }
+
+    public void onAnuleaza(ActionEvent actionEvent) throws Exception {
+        var cars = this.service.getAllCars();
+        modelCar.setAll(cars);
+    }
+
+    public void onAddCar(ActionEvent actionEvent)
+    {
 
     }
 }
