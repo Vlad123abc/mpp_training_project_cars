@@ -1,4 +1,4 @@
 server.port=55556
 
 jdbc.driver=org.sqlite.JDBC
-jdbc.url=jdbc:sqlite:C:/Users/vlad/Documents/Facultate/mpp/training_projects/cars.db
+jdbc.url=jdbc:sqlite:C:/Users/vlad/Documents/Facultate/an2/an2_sem2/mpp/training_projects/cars.db
